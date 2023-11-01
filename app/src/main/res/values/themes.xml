@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FaturAppMicro" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/primaryNavigationBar</item>
+        <item name="android:navigationBarColor">@color/primaryNavigationBar</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="Theme.FaturAppMicro" parent="Base.Theme.FaturAppMicro" />
+</resources>

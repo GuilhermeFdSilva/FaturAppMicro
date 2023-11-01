@@ -1,0 +1,14 @@
+<resources>
+    <string name="speakable_FAB">Adicionar conta</string>
+
+    <string name="speakable_navbar">Barra de navegação</string>
+    <string name="speakable_content">Conteudo</string>
+
+    <string name="speakable_cashier">Caixa</string>
+
+    <string name="speakable_editName">Editar nome</string>
+    <string name="speakable_editCnpj">Editar CNPJ</string>
+    <string name="speakable_saveName">Salvar nome</string>
+    <string name="speakable_saveCnpj">Salvar CNPJ</string>
+    <string name="speakable_copyCnpj">Copiar CNPJ</string>
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FaturApp Micro</string>
+
+    <string name="company_name">Nome da empresa</string>
+    <string name="company_cnpj">CNPJ da empresa</string>
+
+    <string name="this_month">Resumo do mês</string>
+    <string name="entrance">Entrada</string>
+    <string name="exit">Saída</string>
+</resources>
