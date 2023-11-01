@@ -17,9 +17,10 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="81dp"
         android:contentDescription="@string/speakable_FAB"
+        android:visibility="gone"
         app:backgroundTint="@color/primaryDark"
         app:fabSize="normal"
         app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add_account" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

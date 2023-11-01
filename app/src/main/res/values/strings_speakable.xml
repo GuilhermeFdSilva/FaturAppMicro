@@ -5,6 +5,8 @@
     <string name="speakable_content">Conteudo</string>
 
     <string name="speakable_cashier">Caixa</string>
+    <string name="speakable_clients">Clientes</string>
+    <string name="speakable_accounts">Contas</string>
 
     <string name="speakable_editName">Editar nome</string>
     <string name="speakable_editCnpj">Editar CNPJ</string>
