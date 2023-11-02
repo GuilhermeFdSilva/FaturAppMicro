@@ -7,4 +7,9 @@
     <string name="this_month">Resumo do mês</string>
     <string name="entrance">Entrada</string>
     <string name="exit">Saída</string>
+
+    <string name="name">Guilherme França</string>
+    <string name="info">123.456.789-0</string>
+    <string name="account">Conta de luz</string>
+    <string name="value">R$ 100,00</string>
 </resources>

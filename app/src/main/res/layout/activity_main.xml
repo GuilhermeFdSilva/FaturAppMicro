@@ -19,8 +19,10 @@
         android:contentDescription="@string/speakable_FAB"
         android:visibility="gone"
         app:backgroundTint="@color/primaryDark"
+        app:elevation="0dp"
         app:fabSize="normal"
         app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_add_account" />
+        app:srcCompat="@drawable/ic_add_account"
+        tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

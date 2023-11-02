@@ -13,4 +13,7 @@
     <string name="speakable_saveName">Salvar nome</string>
     <string name="speakable_saveCnpj">Salvar CNPJ</string>
     <string name="speakable_copyCnpj">Copiar CNPJ</string>
+
+    <string name="speakable_delet">Excluir</string>
+    <string name="speakable_paid">Switch pago</string>
 </resources>
