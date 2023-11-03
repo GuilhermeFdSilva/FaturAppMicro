@@ -5,8 +5,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.eventclick.faturappmicro.R;
 import com.eventclick.faturappmicro.helpers.UserPreferences;
+import com.eventclick.faturappmicro.helpers.filter.filterCpfCnpj;
 import com.google.android.material.snackbar.Snackbar;
 
 public class CashierFragment extends Fragment {
@@ -94,53 +93,7 @@ public class CashierFragment extends Fragment {
         imageCopyCnpj = view.findViewById(R.id.imageCopyCnpj);
         imageSaveCnpj = view.findViewById(R.id.imageSaveCnpj);
 
-        addMask();
-    }
-
-    private void addMask() {
-        inputCnpj.addTextChangedListener(new TextWatcher() {
-            private boolean isUpdating = false;
-            private String current = "";
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (isUpdating) {
-                    isUpdating = false;
-                    return;
-                }
-
-                String unmask = charSequence.toString().replaceAll("[^0-9]*", "");
-                String mask = "##.###.###/####-##";
-                String formattedString = "";
-
-                int index = 0;
-                for (int j = 0; j < mask.length(); j++) {
-                    if (index == unmask.length()) {
-                        break;
-                    }
-
-                    char c = mask.charAt(j);
-                    if (c == '#') {
-                        formattedString += unmask.charAt(index);
-                        index++;
-                    } else {
-                        formattedString += c;
-                    }
-                }
-
-                isUpdating = true;
-                inputCnpj.setText(formattedString);
-                inputCnpj.setSelection(formattedString.length());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
+        inputCnpj.addTextChangedListener(new filterCpfCnpj(inputCnpj));
     }
 
     private void configureViewsNameVisibility() {

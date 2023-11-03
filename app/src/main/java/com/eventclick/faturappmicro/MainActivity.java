@@ -1,10 +1,15 @@
 package com.eventclick.faturappmicro;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eventclick.faturappmicro.databinding.ActivityMainBinding;
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-          getSupportFragmentManager(), FragmentPagerItems.with(this)
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add("Clientes", ClientsFragment.class)
                 .add("Caixa", CashierFragment.class)
                 .add("Contas", AccountsFragment.class)
@@ -73,12 +78,49 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (currentPosition == 0) {
-                    Toast.makeText(getApplicationContext(), "Adiciona cliente", Toast.LENGTH_SHORT).show();
-                } else if (currentPosition == 2) {
-                    Toast.makeText(getApplicationContext(), "Adiciona conta", Toast.LENGTH_SHORT).show();
-                }
+                addData();
             }
         });
+    }
+
+    private void addData() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        int greenColor = ContextCompat.getColor(this, R.color.primaryDark);
+        int redColor = ContextCompat.getColor(this, R.color.red);
+
+        SpannableString positiveButton = new SpannableString("Cadastrar");
+        positiveButton.setSpan(new ForegroundColorSpan(greenColor), 0, positiveButton.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        SpannableString negativeButton = new SpannableString("Cancelar");
+        negativeButton.setSpan(new ForegroundColorSpan(redColor), 0, negativeButton.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        if (currentPosition == 0) {
+            View view = getLayoutInflater().inflate(R.layout.dialog_add_client, null);
+
+            builder.setView(view)
+                    .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .setNegativeButton(negativeButton, null)
+                    .create()
+                    .show();
+        } else if (currentPosition == 2) {
+            View view = getLayoutInflater().inflate(R.layout.dialog_add_account, null);
+
+            builder.setView(view)
+                    .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .setNegativeButton(negativeButton, null)
+                    .create()
+                    .show();
+        }
     }
 }

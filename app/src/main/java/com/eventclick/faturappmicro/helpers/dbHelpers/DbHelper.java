@@ -28,10 +28,10 @@ public class DbHelper extends SQLiteOpenHelper {
                                     "CREATE TABLE IF NOT EXISTS %s (" +
                                             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                             "client_id INTEGER," +
-                                            "value DECIMAL(8, 2)," +
-                                            "created DATE," +
+                                            "value DECIMAL(8, 2)NOT NULL," +
+                                            "created DATE NOT NULL," +
                                             "expiration DATE," +
-                                            "paid BOOLEAN" +
+                                            "paid BOOLEAN NOT NULL," +
                                             "FOREIGN KEY (client_id) REFERENCES %s(id)" +
                                             ");", CLIENT_TABLE, ACCOUNTS_TABLE, CLIENT_TABLE);
         try {

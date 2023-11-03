@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="10dp"
+    android:paddingTop="15dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="15dp">
+
+    <TextView
+        android:id="@+id/textTitleAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/create_account"
+        android:textColor="@color/primaryDark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_account_value" />
+
+    <EditText
+        android:id="@+id/editTextValue"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/speakable_account_value"
+        android:inputType="text"
+        android:labelFor="@id/textViewValue" />
+
+    <Switch
+        android:id="@+id/switchPaid"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/register_account_paid" />
+
+    <TextView
+        android:id="@+id/textViewClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_account_client" />
+
+    <Spinner
+        android:id="@+id/spinnerClient"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:labelFor="@id/textViewClient" />
+
+    <TextView
+        android:id="@+id/textOptional5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/optional"
+        android:textColor="@color/accent"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textViewExpiration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_account_expiration" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="@string/speakable_account_expiration"
+        android:inputType="date"
+        android:labelFor="@id/textViewExpiration" />
+
+    <TextView
+        android:id="@+id/textOptional6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/optional"
+        android:textColor="@color/accent"
+        android:textSize="12sp" />
+
+</LinearLayout>

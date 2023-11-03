@@ -8,6 +8,23 @@
     <string name="entrance">Entrada</string>
     <string name="exit">Saída</string>
 
+    <string name="create_client">Cadastrar cliente</string>
+    <string name="create_account">Cadastrar conta</string>
+
+    <string name="register_client_name">Nome:</string>
+    <string name="register_client_cpf_cnpj">CPF/CNPJ:</string>
+    <string name="register_client_contact">Contato:</string>
+    <string name="register_client_address">Endereço:</string>
+    <string name="register_client_pix">PIX:</string>7
+
+    <string name="register_account_client">Cliente:</string>
+    <string name="register_account_value">Valor:</string>
+    <string name="register_account_expiration">Vencimento:</string>
+    <string name="register_account_paid">Pago:</string>
+
+    <string name="optional">Opicional</string>
+
+    // Mock Strings
     <string name="name">Guilherme França</string>
     <string name="info">123.456.789-0</string>
     <string name="account">Conta de luz</string>

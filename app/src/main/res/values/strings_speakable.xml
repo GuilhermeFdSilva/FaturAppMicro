@@ -14,6 +14,17 @@
     <string name="speakable_saveCnpj">Salvar CNPJ</string>
     <string name="speakable_copyCnpj">Copiar CNPJ</string>
 
-    <string name="speakable_delet">Excluir</string>
+    <string name="speakable_delete">Excluir</string>
     <string name="speakable_paid">Switch pago</string>
+
+    <string name="speakable_client_name">Nome</string>
+    <string name="speakable_client_cpf_cnpj">CPF/CNPJ</string>
+    <string name="speakable_client_contact">Contato</string>
+    <string name="speakable_client_address">Endereço</string>
+    <string name="speakable_client_pix">PIX</string>
+
+    <string name="speakable_account_client">Cliente</string>
+    <string name="speakable_account_value">Valor</string>
+    <string name="speakable_account_expiration">Vencimento</string>
+    <string name="speakable_account_paid">Pago</string>
 </resources>

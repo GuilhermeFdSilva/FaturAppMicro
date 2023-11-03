@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
-            android:contentDescription="@string/speakable_delet"
+            android:contentDescription="@string/speakable_delete"
             android:scaleType="fitEnd"
             app:srcCompat="@drawable/ic_delete" />
 
