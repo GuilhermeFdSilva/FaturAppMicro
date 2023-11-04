@@ -33,7 +33,7 @@ public class filterCpfCnpj implements TextWatcher {
 
         int index = 0;
         for (int i = 0; i < mask.length(); i++) {
-            if (unmask.length() > 10) {
+            if (unmask.length() > 11) {
                 mask = "##.###.###/####-##";
             }
             if (index == unmask.length()) {

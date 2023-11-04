@@ -1,5 +1,6 @@
 <resources>
-    <string name="speakable_FAB">Adicionar conta</string>
+    <string name="speakable_fab_accounts">Adicionar conta</string>
+    <string name="speakable_fab_clients">Adicionar cliente</string>
 
     <string name="speakable_navbar">Barra de navegação</string>
     <string name="speakable_content">Conteudo</string>
