@@ -77,6 +77,35 @@ public class AccountDAO implements IDAO<Account>{
     }
 
     @Override
+    public Account getById(int idItem) {
+        String sql = String.format("SELECT * FROM %s WHERE id=%d", DbHelper.ACCOUNTS_TABLE, idItem);
+
+        Cursor cursor = read.rawQuery(sql, null);
+
+        if (cursor.isNull(0)) {
+            return null;
+        }
+
+        int indexId = cursor.getColumnIndex("id");
+        int indexClientId = cursor.getColumnIndex("client_id");
+        int indexValue = cursor.getColumnIndex("value");
+        int indexCreated = cursor.getColumnIndex("created");
+        int indexExpiration = cursor.getColumnIndex("expiration");
+        int indexPaid = cursor.getColumnIndex("paid");
+
+        Long id = cursor.getLong(indexId);
+        Long clientId = cursor.getLong(indexClientId);
+        double value = cursor.getDouble(indexValue);
+        Long created = cursor.getLong(indexCreated);
+        Long expiration = cursor.getLong(indexExpiration);
+        boolean paid = cursor.getInt(indexPaid) == 1;
+
+        Account account = new Account(id, clientId, value, new Date(created), new Date(expiration), paid);
+
+        return account;
+    }
+
+    @Override
     public List<Account> list() {
         List<Account> accounts = new ArrayList<>();
 
@@ -93,6 +122,32 @@ public class AccountDAO implements IDAO<Account>{
 
             Long id = cursor.getLong(indexId);
             Long clientId = cursor.getLong(indexClientId);
+            double value = cursor.getDouble(indexValue);
+            Long created = cursor.getLong(indexCreated);
+            Long expiration = cursor.getLong(indexExpiration);
+            boolean paid = cursor.getInt(indexPaid) == 1;
+
+            Account account = new Account(id, clientId, value, new Date(created), new Date(expiration), paid);
+            accounts.add(account);
+        }
+
+        return accounts;
+    }
+
+    public List<Account> getByClientId(Long clientId) {
+        List<Account> accounts = new ArrayList<>();
+
+        String sql = String.format("SELECT * FROM %s WHERE client_id=%d", DbHelper.ACCOUNTS_TABLE, clientId);
+        Cursor cursor = read.rawQuery(sql, null);
+
+        while (cursor.moveToNext()) {
+            int indexId = cursor.getColumnIndex("id");
+            int indexValue = cursor.getColumnIndex("value");
+            int indexCreated = cursor.getColumnIndex("created");
+            int indexExpiration = cursor.getColumnIndex("expiration");
+            int indexPaid = cursor.getColumnIndex("paid");
+
+            Long id = cursor.getLong(indexId);
             double value = cursor.getDouble(indexValue);
             Long created = cursor.getLong(indexCreated);
             Long expiration = cursor.getLong(indexExpiration);

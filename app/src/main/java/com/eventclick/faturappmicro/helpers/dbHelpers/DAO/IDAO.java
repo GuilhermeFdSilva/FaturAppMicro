@@ -6,5 +6,6 @@ public interface IDAO<T> {
     public boolean save(T objeto);
     public boolean update(T objeto);
     public boolean delete(T objeto);
+    public T getById(int idItem);
     public List<T> list();
 }

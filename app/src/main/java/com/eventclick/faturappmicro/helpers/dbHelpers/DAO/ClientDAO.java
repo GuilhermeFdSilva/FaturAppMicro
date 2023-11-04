@@ -76,6 +76,35 @@ public class ClientDAO implements IDAO<Client>{
     }
 
     @Override
+    public Client getById(int idItem) {
+        String sql = String.format("SELECT * FROM %s WHERE id=%d", DbHelper.CLIENT_TABLE, idItem);
+
+        Cursor cursor = read.rawQuery(sql, null);
+
+        if (cursor.isNull(0)) {
+            return null;
+        }
+
+        int indexId = cursor.getColumnIndex("id");
+        int indexName = cursor.getColumnIndex("name");
+        int indexCpf_cnpj = cursor.getColumnIndex("cpf_cnpj");
+        int indexContact = cursor.getColumnIndex("contact");
+        int indexAddress = cursor.getColumnIndex("address");
+        int indexPix = cursor.getColumnIndex("pix");
+
+        Long id = cursor.getLong(indexId);
+        String name = cursor.getString(indexName);
+        String cpf_cnpj = cursor.getString(indexCpf_cnpj);
+        String contact  = cursor.getString(indexContact);
+        String address = cursor.getString(indexAddress);
+        String pix = cursor.getString(indexPix);
+
+        Client client = new Client(id, name, cpf_cnpj, contact, address, pix);
+
+        return client;
+    }
+
+    @Override
     public List<Client> list() {
         List<Client> clients = new ArrayList<>();
 
