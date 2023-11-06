@@ -17,25 +17,30 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql =  String.format("CREATE TABLE IF NOT EXISTS %s (" +
-                                            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                            "name VARCHAR(35) NOT NULL," +
-                                            "cpf_cnpj VARCHAR (18)," +
-                                            "contact VARCHAR(14)," +
-                                            "address VARCHAR (120)," +
-                                            "pix VARCHAR(180)" +
-                                            ");" +
-                                    "CREATE TABLE IF NOT EXISTS %s (" +
-                                            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                            "client_id INTEGER," +
-                                            "value DECIMAL(8, 2)NOT NULL," +
-                                            "created DATE NOT NULL," +
-                                            "expiration DATE," +
-                                            "paid BOOLEAN NOT NULL," +
-                                            "FOREIGN KEY (client_id) REFERENCES %s(id)" +
-                                            ");", CLIENT_TABLE, ACCOUNTS_TABLE, CLIENT_TABLE);
+        String sqlClient = String.format(
+                "CREATE TABLE IF NOT EXISTS %s (" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "name VARCHAR(35) NOT NULL," +
+                        "cpf_cnpj VARCHAR (18)," +
+                        "contact VARCHAR(14)," +
+                        "address VARCHAR (120)," +
+                        "pix VARCHAR(180)" +
+                ");", CLIENT_TABLE);
+
+        String sqlAccount = String.format(
+                "CREATE TABLE IF NOT EXISTS %s (" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "client_id INTEGER," +
+                        "description VARCHAR(20) NOT NULL," +
+                        "value DECIMAL(8, 2) NOT NULL," +
+                        "created DATE NOT NULL," +
+                        "expiration DATE," +
+                        "paid BOOLEAN NOT NULL," +
+                        "FOREIGN KEY (client_id) REFERENCES %s(id)" +
+                ");", ACCOUNTS_TABLE, CLIENT_TABLE);
         try {
-            sqLiteDatabase.execSQL(sql);
+            sqLiteDatabase.execSQL(sqlClient);
+            sqLiteDatabase.execSQL(sqlAccount);
             Log.i("INFO DB", "successful database creation");
         } catch (Exception e) {
             Log.i("INFO DB", "error at create database" + e.getMessage());

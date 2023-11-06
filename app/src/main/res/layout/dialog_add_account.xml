@@ -24,6 +24,21 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textViewDescricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register_account_description" />
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="@string/speakable_account_description"
+            android:inputType="text" />
+
+        <TextView
             android:id="@+id/textViewValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +51,7 @@
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="@string/speakable_account_value"
-            android:inputType="text"
+            android:inputType="number|numberDecimal|numberSigned"
             android:labelFor="@id/textViewValue" />
 
         <Switch
@@ -75,7 +90,7 @@
             android:text="@string/register_account_expiration" />
 
         <EditText
-            android:id="@+id/editTextDate"
+            android:id="@+id/editTextExpiration"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:ems="10"

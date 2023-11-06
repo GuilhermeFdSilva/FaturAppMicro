@@ -24,6 +24,7 @@
     <string name="speakable_client_address">Endereço</string>
     <string name="speakable_client_pix">PIX</string>
 
+    <string name="speakable_account_description">Descrição</string>
     <string name="speakable_account_client">Cliente</string>
     <string name="speakable_account_value">Valor</string>
     <string name="speakable_account_expiration">Vencimento</string>

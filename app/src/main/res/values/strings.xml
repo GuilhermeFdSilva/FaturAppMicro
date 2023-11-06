@@ -15,8 +15,9 @@
     <string name="register_client_cpf_cnpj">CPF/CNPJ:</string>
     <string name="register_client_contact">Contato:</string>
     <string name="register_client_address">Endereço:</string>
-    <string name="register_client_pix">PIX:</string>7
+    <string name="register_client_pix">PIX:</string>
 
+    <string name="register_account_description">Descrição:</string>
     <string name="register_account_client">Cliente:</string>
     <string name="register_account_value">Valor:</string>
     <string name="register_account_expiration">Vencimento:</string>

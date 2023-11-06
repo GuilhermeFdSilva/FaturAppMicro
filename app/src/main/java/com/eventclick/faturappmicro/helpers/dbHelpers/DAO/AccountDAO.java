@@ -27,6 +27,7 @@ public class AccountDAO implements IDAO<Account>{
     public boolean save(Account account) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("client_id", account.getClientId());
+        contentValues.put("description", account.getDescription());
         contentValues.put("value", account.getValue());
         contentValues.put("created", account.getCreated().getTime());
         contentValues.put("expiration", account.getExpiration().getTime());
@@ -46,6 +47,7 @@ public class AccountDAO implements IDAO<Account>{
     public boolean update(Account account) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("client_id", account.getClientId());
+        contentValues.put("description", account.getDescription());
         contentValues.put("value", account.getValue());
         contentValues.put("created", account.getCreated().getTime());
         contentValues.put("expiration", account.getExpiration().getTime());
@@ -88,6 +90,7 @@ public class AccountDAO implements IDAO<Account>{
 
         int indexId = cursor.getColumnIndex("id");
         int indexClientId = cursor.getColumnIndex("client_id");
+        int indexDescription = cursor.getColumnIndex("description");
         int indexValue = cursor.getColumnIndex("value");
         int indexCreated = cursor.getColumnIndex("created");
         int indexExpiration = cursor.getColumnIndex("expiration");
@@ -95,12 +98,13 @@ public class AccountDAO implements IDAO<Account>{
 
         Long id = cursor.getLong(indexId);
         Long clientId = cursor.getLong(indexClientId);
+        String description = cursor.getString(indexDescription);
         double value = cursor.getDouble(indexValue);
         Long created = cursor.getLong(indexCreated);
         Long expiration = cursor.getLong(indexExpiration);
         boolean paid = cursor.getInt(indexPaid) == 1;
 
-        Account account = new Account(id, clientId, value, new Date(created), new Date(expiration), paid);
+        Account account = new Account(id, clientId, description, value, new Date(created), new Date(expiration), paid);
 
         return account;
     }
@@ -115,6 +119,7 @@ public class AccountDAO implements IDAO<Account>{
         while (cursor.moveToNext()) {
             int indexId = cursor.getColumnIndex("id");
             int indexClientId = cursor.getColumnIndex("client_id");
+            int indexDescription = cursor.getColumnIndex("description");
             int indexValue = cursor.getColumnIndex("value");
             int indexCreated = cursor.getColumnIndex("created");
             int indexExpiration = cursor.getColumnIndex("expiration");
@@ -122,12 +127,13 @@ public class AccountDAO implements IDAO<Account>{
 
             Long id = cursor.getLong(indexId);
             Long clientId = cursor.getLong(indexClientId);
+            String description = cursor.getString(indexDescription);
             double value = cursor.getDouble(indexValue);
             Long created = cursor.getLong(indexCreated);
             Long expiration = cursor.getLong(indexExpiration);
             boolean paid = cursor.getInt(indexPaid) == 1;
 
-            Account account = new Account(id, clientId, value, new Date(created), new Date(expiration), paid);
+            Account account = new Account(id, clientId, description, value, new Date(created), new Date(expiration), paid);
             accounts.add(account);
         }
 
@@ -142,18 +148,20 @@ public class AccountDAO implements IDAO<Account>{
 
         while (cursor.moveToNext()) {
             int indexId = cursor.getColumnIndex("id");
+            int indexDescription = cursor.getColumnIndex("description");
             int indexValue = cursor.getColumnIndex("value");
             int indexCreated = cursor.getColumnIndex("created");
             int indexExpiration = cursor.getColumnIndex("expiration");
             int indexPaid = cursor.getColumnIndex("paid");
 
             Long id = cursor.getLong(indexId);
+            String description = cursor.getString(indexDescription);
             double value = cursor.getDouble(indexValue);
             Long created = cursor.getLong(indexCreated);
             Long expiration = cursor.getLong(indexExpiration);
             boolean paid = cursor.getInt(indexPaid) == 1;
 
-            Account account = new Account(id, clientId, value, new Date(created), new Date(expiration), paid);
+            Account account = new Account(id, clientId, description, value, new Date(created), new Date(expiration), paid);
             accounts.add(account);
         }
 
