@@ -1,14 +1,14 @@
-package com.eventclick.faturappmicro.helpers.filter;
+package com.eventclick.faturappmicro.helpers.filters;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-public class filterCpfCnpj implements TextWatcher {
-    private final EditText editText;
+public class filterDate implements TextWatcher {
+    private EditText editText;
     private boolean isUpdating = false;
 
-    public filterCpfCnpj (EditText editText) {
+    public filterDate(EditText editText) {
         this.editText = editText;
     }
 
@@ -28,14 +28,11 @@ public class filterCpfCnpj implements TextWatcher {
         }
 
         String unmask = editable.toString().replaceAll("[^0-9]*", "");
-        String mask = "###.###.###-##";
+        String mask = "##/##/####";
         String formattedString = "";
 
         int index = 0;
         for (int i = 0; i < mask.length(); i++) {
-            if (unmask.length() > 11) {
-                mask = "##.###.###/####-##";
-            }
             if (index == unmask.length()) {
                 break;
             }

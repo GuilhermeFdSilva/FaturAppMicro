@@ -28,12 +28,14 @@ import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.AccountDAO;
 import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.ClientDAO;
 import com.eventclick.faturappmicro.helpers.dbHelpers.models.Account;
 import com.eventclick.faturappmicro.helpers.dbHelpers.models.Client;
+import com.eventclick.faturappmicro.helpers.filters.filterDate;
+import com.eventclick.faturappmicro.helpers.observers.ObserveFragment;
 
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.List;
 
-public class AccountsFragment extends Fragment {
+public class AccountsFragment extends Fragment implements ObserveFragment {
     private AccountDAO accountDAO;
     private ClientDAO clientDAO;
 
@@ -95,6 +97,9 @@ public class AccountsFragment extends Fragment {
         Spinner spinner = view.findViewById(R.id.spinnerClient);
         spinner.setAdapter(new AdapterSpinner(getContext(), clients));
 
+        EditText editExpiration = view.findViewById(R.id.editTextExpiration);
+        editExpiration.addTextChangedListener(new filterDate(editExpiration));
+
         builder.setView(view)
                 .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                     @Override
@@ -128,7 +133,7 @@ public class AccountsFragment extends Fragment {
 
         String description = viewDescription.getText().toString();
         double value = Double.parseDouble(viewValue.getText().toString());
-        boolean paid = viewPaid.isActivated();
+        boolean paid = viewPaid.isChecked();
         Long clientId = viewClient.getSelectedItemId() == -1L ? null : viewClient.getSelectedItemId();
         java.sql.Date expiration = new Date(new java.util.Date().getTime());
 
@@ -143,5 +148,10 @@ public class AccountsFragment extends Fragment {
         Account account = new Account(clientId, description, value, expiration, paid);
 
         return account;
+    }
+
+    @Override
+    public void update() {
+        clients = clientDAO.list();
     }
 }

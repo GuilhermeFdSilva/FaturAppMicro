@@ -12,21 +12,28 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.eventclick.faturappmicro.MainActivity;
 import com.eventclick.faturappmicro.R;
 import com.eventclick.faturappmicro.helpers.UserPreferences;
-import com.eventclick.faturappmicro.helpers.filter.filterCpfCnpj;
-import com.google.android.material.snackbar.Snackbar;
+import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.AccountDAO;
+import com.eventclick.faturappmicro.helpers.dbHelpers.models.Account;
+import com.eventclick.faturappmicro.helpers.filters.filterCpfCnpj;
+import com.eventclick.faturappmicro.helpers.observers.ObserveFragment;
 
-public class CashierFragment extends Fragment {
+import java.util.List;
+
+public class CashierFragment extends Fragment implements ObserveFragment {
 
     private UserPreferences preferences;
     private InputMethodManager inputMethodManager;
 
-    private TextView textCompanyName, textCompanyCnpj;
+    private AccountDAO accountDAO;
+
+    private TextView textCompanyName, textCompanyCnpj, textCashier, textEntranceValue, textExitValue;
     private EditText inputName, inputCnpj;
     private ImageView imageEditName, imageSaveName, imageEditCnpj, imageCopyCnpj, imageSaveCnpj;
 
@@ -37,6 +44,9 @@ public class CashierFragment extends Fragment {
 
         preferences = new UserPreferences(getContext());
         inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        accountDAO = new AccountDAO(getContext());
+        MainActivity.registerObserver(this);
 
         setViews(view);
 
@@ -93,34 +103,38 @@ public class CashierFragment extends Fragment {
         imageCopyCnpj = view.findViewById(R.id.imageCopyCnpj);
         imageSaveCnpj = view.findViewById(R.id.imageSaveCnpj);
 
+        textCashier = view.findViewById(R.id.textCashier);
+        textEntranceValue = view.findViewById(R.id.textEntranceValue);
+        textExitValue = view.findViewById(R.id.textExitValue);
+
+        getValues();
+
         inputCnpj.addTextChangedListener(new filterCpfCnpj(inputCnpj));
     }
 
     private void configureViewsNameVisibility() {
-        if (!textCompanyName.getText().toString().isEmpty()) {
-            textCompanyName.setVisibility(View.VISIBLE);
-            imageEditName.setVisibility(View.VISIBLE);
+        textCompanyName.setVisibility(View.VISIBLE);
+        imageEditName.setVisibility(View.VISIBLE);
 
-            inputName.setVisibility(View.GONE);
-            imageSaveName.setVisibility(View.GONE);
+        inputName.setVisibility(View.GONE);
+        imageSaveName.setVisibility(View.GONE);
 
-            inputName.clearFocus();
-            inputMethodManager.hideSoftInputFromWindow((IBinder) inputName.getWindowToken(), 0);
-        }
+        inputName.clearFocus();
+        inputMethodManager.hideSoftInputFromWindow((IBinder) inputName.getWindowToken(), 0);
+
     }
 
     private void configureViewsCnpjVisibility() {
-        if (!textCompanyCnpj.getText().toString().isEmpty()) {
-            textCompanyCnpj.setVisibility(View.VISIBLE);
-            imageEditCnpj.setVisibility(View.VISIBLE);
-            imageCopyCnpj.setVisibility(View.VISIBLE);
+        textCompanyCnpj.setVisibility(View.VISIBLE);
+        imageEditCnpj.setVisibility(View.VISIBLE);
+        imageCopyCnpj.setVisibility(View.VISIBLE);
 
-            inputCnpj.setVisibility(View.GONE);
-            imageSaveCnpj.setVisibility(View.GONE);
+        inputCnpj.setVisibility(View.GONE);
+        imageSaveCnpj.setVisibility(View.GONE);
 
-            inputCnpj.clearFocus();
-            inputMethodManager.hideSoftInputFromWindow((IBinder) inputCnpj.getWindowToken(), 0);
-        }
+        inputCnpj.clearFocus();
+        inputMethodManager.hideSoftInputFromWindow((IBinder) inputCnpj.getWindowToken(), 0);
+
     }
 
     private void editCompanyName() {
@@ -146,39 +160,45 @@ public class CashierFragment extends Fragment {
         inputMethodManager.showSoftInput(inputCnpj, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    private void setCompanyName () {
+    private void setCompanyName() {
         String newCompanyName = inputName.getText().toString();
 
-        if (newCompanyName.isEmpty()) {
-            Snackbar.make(getView(), "Preencha o campo \"Nome da empresa\"", Snackbar.LENGTH_LONG)
-                    .setAnchorView(R.id.textCashier)
-                    .show();
-        } else {
-            preferences.save(preferences.KEY_NAME, newCompanyName);
-            textCompanyName.setText(preferences.getPreference(preferences.KEY_NAME));
-            configureViewsNameVisibility();
-        }
+        preferences.save(preferences.KEY_NAME,
+                newCompanyName.isEmpty() ? getString(R.string.empty_company_name) : newCompanyName);
+
+        textCompanyName.setText(preferences.getPreference(preferences.KEY_NAME));
+        configureViewsNameVisibility();
     }
 
-    private void setCompanyCnpj () {
+    private void setCompanyCnpj() {
         String newCompanyCnpj = inputCnpj.getText().toString();
 
-        if (newCompanyCnpj.isEmpty()) {
-            Snackbar.make(getView(), "Preencha o campo \"Cnpj da empresa\"", Snackbar.LENGTH_LONG)
-                    .setAnchorView(R.id.textCashier)
-                    .show();
-        } else {
-            preferences.save(preferences.KEY_CNPJ, newCompanyCnpj);
-            textCompanyCnpj.setText(preferences.getPreference(preferences.KEY_CNPJ));
-            configureViewsCnpjVisibility();
-        }
+        preferences.save(preferences.KEY_CNPJ,
+                newCompanyCnpj.isEmpty() ? getString(R.string.empty_company_cpf_cnpj) : newCompanyCnpj);
+        textCompanyCnpj.setText(preferences.getPreference(preferences.KEY_CNPJ));
+        configureViewsCnpjVisibility();
     }
 
     private void copyCompanyCnpj(Context context) {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData data = ClipData.newPlainText("Cnpj", preferences.getPreference(preferences.KEY_CNPJ));
         clipboard.setPrimaryClip(data);
+    }
 
-        Toast.makeText(context, "CNPJ copiado", Toast.LENGTH_LONG).show();
+    private void getValues() {
+        List<Account> accounts = accountDAO.list();
+
+        double value = accounts.stream().mapToDouble(Account::getValue).sum();
+        textCashier.setText(String.format("R$ %.2f", value));
+
+        if (value < 0){
+            int redColor = ContextCompat.getColor(getContext(), R.color.red);
+            textCashier.setTextColor(redColor);
+        }
+    }
+
+    @Override
+    public void update() {
+        getValues();
     }
 }

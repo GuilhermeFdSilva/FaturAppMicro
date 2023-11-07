@@ -71,6 +71,10 @@ public class AdapterAccounts extends RecyclerView.Adapter<AdapterAccounts.MyView
         String sValue = String.format("R$ %.2f", value).replace(".", ",");
         holder.textAccountValue.setText(sValue);
 
+        if (value < 0) {
+            holder.textAccountValue.setTextColor(ContextCompat.getColor(holder.textAccountValue.getContext(), R.color.red));
+        }
+
         if (!account.isPaid()) {
             holder.imagePaid.setImageResource(R.drawable.ic_not_paid);
         } else {

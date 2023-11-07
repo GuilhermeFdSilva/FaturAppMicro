@@ -16,9 +16,13 @@ import com.eventclick.faturappmicro.databinding.ActivityMainBinding;
 import com.eventclick.faturappmicro.fragments.AccountsFragment;
 import com.eventclick.faturappmicro.fragments.CashierFragment;
 import com.eventclick.faturappmicro.fragments.ClientsFragment;
+import com.eventclick.faturappmicro.helpers.observers.ObserveFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private SmartTabLayout smartTabLayout;
     private ViewPager viewPager;
 
-    private int currentPosition = 1;
+    private static final List<ObserveFragment> OBSERVE_FRAGMENTS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,5 +54,30 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         smartTabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                emitUpdate();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    public static void registerObserver(ObserveFragment observeFragment) {
+        OBSERVE_FRAGMENTS.add(observeFragment);
+    }
+
+    public static void emitUpdate() {
+        for (ObserveFragment observer :OBSERVE_FRAGMENTS) {
+            observer.update();
+        }
     }
 }

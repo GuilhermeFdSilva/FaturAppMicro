@@ -2,7 +2,10 @@
     <string name="app_name">FaturApp Micro</string>
 
     <string name="company_name">Nome da empresa</string>
-    <string name="company_cnpj">CNPJ da empresa</string>
+    <string name="company_cnpj">CPF/CNPJ</string>
+
+    <string name="empty_company_name">- Adicione o nome -</string>
+    <string name="empty_company_cpf_cnpj">- Adicione CPF/CNPJ -</string>
 
     <string name="this_month">Resumo do mês</string>
     <string name="entrance">Entrada</string>
