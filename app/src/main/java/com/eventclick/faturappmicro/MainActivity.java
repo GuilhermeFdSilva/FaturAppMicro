@@ -54,21 +54,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         smartTabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                emitUpdate();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
     }
 
     public static void registerObserver(ObserveFragment observeFragment) {
