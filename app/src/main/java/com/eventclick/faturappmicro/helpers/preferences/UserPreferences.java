@@ -1,4 +1,4 @@
-package com.eventclick.faturappmicro.helpers;
+package com.eventclick.faturappmicro.helpers.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
