@@ -1,6 +1,5 @@
 package com.eventclick.faturappmicro.fragments.adapters;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Spannable;
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eventclick.faturappmicro.MainActivity;
 import com.eventclick.faturappmicro.R;
 import com.eventclick.faturappmicro.fragments.AccountsFragment;
 import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.AccountDAO;
@@ -57,7 +57,7 @@ public class AdapterAccounts extends RecyclerView.Adapter<AdapterAccounts.MyView
 
         holder.textAccountDesc.setText(
                 account.getDescription().length() > 13 ?
-                        String.format("%s...", account.getDescription().substring(0, 13)):
+                        String.format("%s...", account.getDescription().substring(0, 13)) :
                         account.getDescription()
         );
 
@@ -87,6 +87,9 @@ public class AdapterAccounts extends RecyclerView.Adapter<AdapterAccounts.MyView
                 account.setPaid(!account.isPaid());
                 if (new AccountDAO(context).update(account)) {
                     fragment.getRegisters();
+                    MainActivity.emitUpdate();
+                } else {
+                    Toast.makeText(view.getContext(), "Erro ao pagar conta", Toast.LENGTH_LONG);
                 }
             }
         });
@@ -110,8 +113,9 @@ public class AdapterAccounts extends RecyclerView.Adapter<AdapterAccounts.MyView
                         .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                if (new AccountDAO(view.getContext()).delete(account)){
+                                if (new AccountDAO(view.getContext()).delete(account)) {
                                     fragment.getRegisters();
+                                    MainActivity.emitUpdate();
                                 } else {
                                     Toast.makeText(view.getContext(), "Erro ao deletar conta", Toast.LENGTH_LONG);
                                 }

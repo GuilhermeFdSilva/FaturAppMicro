@@ -24,6 +24,7 @@ import com.eventclick.faturappmicro.helpers.dbHelpers.models.Account;
 import com.eventclick.faturappmicro.helpers.filters.filterCpfCnpj;
 import com.eventclick.faturappmicro.helpers.observers.ObserveFragment;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class CashierFragment extends Fragment implements ObserveFragment {
@@ -188,13 +189,29 @@ public class CashierFragment extends Fragment implements ObserveFragment {
     private void getValues() {
         List<Account> accounts = accountDAO.list();
 
-        double value = accounts.stream().mapToDouble(Account::getValue).sum();
+        double value = accounts.stream().mapToDouble(account -> account.isPaid() ? account.getValue() : 0).sum();
         textCashier.setText(String.format("R$ %.2f", value));
 
-        if (value < 0){
+        if (value < 0) {
             int redColor = ContextCompat.getColor(getContext(), R.color.red);
             textCashier.setTextColor(redColor);
+        } else {
+            int greenColor = ContextCompat.getColor(getContext(), R.color.primaryDark);
+            textCashier.setTextColor(greenColor);
         }
+
+        int currentMonth = LocalDate.now().getMonthValue();
+        double positiveValues = accounts.stream().mapToDouble(account ->
+                (account.getPaidAt().getMonth() + 1 == currentMonth && account.getValue() > 0 && account.isPaid()) ?
+                        account.getValue() : 0).sum();
+
+        textEntranceValue.setText(String.format("R$ %.2f", positiveValues));
+
+        double negativeValues = accounts.stream().mapToDouble(account ->
+                (account.getPaidAt().getMonth() + 1 == currentMonth && account.getValue() <= 0 && account.isPaid()) ?
+                        account.getValue() : 0).sum();
+
+        textExitValue.setText(String.format("R$ %.2f", negativeValues));
     }
 
     @Override
