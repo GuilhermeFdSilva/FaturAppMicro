@@ -23,6 +23,18 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@color/accent"
+            android:checked="true"
+            android:elevation="0dp"
+            android:text="@string/register_account_toggle_button"
+            android:textOff="@string/register_account_toggle_off"
+            android:textOn="@string/register_account_toggle_on" />
+
         <TextView
             android:id="@+id/textViewDescricao"
             android:layout_width="match_parent"
@@ -51,7 +63,7 @@
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="@string/speakable_account_value"
-            android:inputType="number|numberDecimal|numberSigned"
+            android:inputType="number"
             android:labelFor="@id/textViewValue" />
 
         <Switch

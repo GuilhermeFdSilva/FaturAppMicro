@@ -20,6 +20,9 @@
     <string name="register_client_address">Endereço:</string>
     <string name="register_client_pix">PIX:</string>
 
+    <string name="register_account_toggle_button">Pagar ou receber</string>
+    <string name="register_account_toggle_on">Receber</string>
+    <string name="register_account_toggle_off">Pagar</string>
     <string name="register_account_description">Descrição:</string>
     <string name="register_account_client">Cliente:</string>
     <string name="register_account_value">Valor:</string>
