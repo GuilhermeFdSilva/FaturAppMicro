@@ -30,6 +30,15 @@ public class Account {
         this.paid = paid;
     }
 
+    public Account(Long clientId, String description, double value, Date paidAt, Date expiration, boolean paid) {
+        this.clientId = clientId;
+        this.description = description;
+        this.value = value;
+        this.paidAt = paidAt;
+        this.expiration = expiration;
+        this.paid = paid;
+    }
+
     public Long getId() {
         return id;
     }
