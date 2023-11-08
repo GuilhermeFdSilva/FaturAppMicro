@@ -33,7 +33,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         "client_id INTEGER," +
                         "description VARCHAR(20) NOT NULL," +
                         "value DECIMAL(8, 2) NOT NULL," +
-                        "created DATE NOT NULL," +
+                        "paid_at DATE," +
                         "expiration DATE," +
                         "paid BOOLEAN NOT NULL," +
                         "FOREIGN KEY (client_id) REFERENCES %s(id)" +
