@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -21,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eventclick.faturappmicro.MainActivity;
 import com.eventclick.faturappmicro.R;
 import com.eventclick.faturappmicro.fragments.adapters.AdapterAccounts;
 import com.eventclick.faturappmicro.fragments.adapters.AdapterSpinner;
@@ -60,7 +60,7 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
         view.findViewById(R.id.fabAccounts).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addAccounts();
+                openAddAccounts();
             }
         });
 
@@ -80,7 +80,7 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void addAccounts() {
+    private void openAddAccounts() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         int greenColor = ContextCompat.getColor(getContext(), R.color.primaryDark);
@@ -109,9 +109,13 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
                         if (account == null) {
                             Toast.makeText(getContext(), "O campo \"DESCRIÇÃO\" e \"VALOR\" são obrigatorios", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getContext(), "Conta cadastrada", Toast.LENGTH_LONG).show();
-                            accountDAO.save(account);
-                            getRegisters();
+                            if (accountDAO.save(account)){
+                                Toast.makeText(getContext(), "Conta cadastrada", Toast.LENGTH_LONG).show();
+                                getRegisters();
+                                MainActivity.emitUpdate();
+                            } else {
+                                Toast.makeText(getContext(), "Erro ao cadastrar conta", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 })
@@ -127,7 +131,8 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
         Spinner viewClient = view.findViewById(R.id.spinnerClient);
         EditText viewExpiration = view.findViewById(R.id.editTextExpiration);
 
-        if (viewDescription.getText().toString().isEmpty() || viewValue.getText().toString().isEmpty()) {
+        if (viewDescription.getText().toString().isEmpty() ||
+                viewValue.getText().toString().isEmpty()) {
             return null;
         }
 
