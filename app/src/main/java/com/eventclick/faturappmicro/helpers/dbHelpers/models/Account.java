@@ -7,16 +7,16 @@ public class Account {
     private Long clientId;
     private String description;
     private double value;
-    private Date created;
+    private Date paidAt;
     private Date expiration;
     private boolean paid;
 
-    public Account(Long id, Long clientId, String description, double value, Date created, Date expiration, boolean paid) {
+    public Account(Long id, Long clientId, String description, double value, Date paidAt, Date expiration, boolean paid) {
         this.id = id;
         this.clientId = clientId;
         this.description = description;
         this.value = value;
-        this.created = created;
+        this.paidAt = paidAt;
         this.expiration = expiration;
         this.paid = paid;
     }
@@ -25,7 +25,7 @@ public class Account {
         this.clientId = clientId;
         this.description = description;
         this.value = value;
-        this.created = new Date(new java.util.Date().getTime());
+        this.paidAt = new Date(new java.util.Date().getTime());
         this.expiration = expiration;
         this.paid = paid;
     }
@@ -62,12 +62,12 @@ public class Account {
         this.value = value;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getPaidAt() {
+        return paidAt;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setPaidAt(Date paidAt) {
+        this.paidAt = paidAt;
     }
 
     public Date getExpiration() {
