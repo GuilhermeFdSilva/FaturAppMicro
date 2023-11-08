@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.eventclick.faturappmicro.MainActivity;
 import com.eventclick.faturappmicro.R;
-import com.eventclick.faturappmicro.helpers.UserPreferences;
+import com.eventclick.faturappmicro.helpers.preferences.UserPreferences;
 import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.AccountDAO;
 import com.eventclick.faturappmicro.helpers.dbHelpers.models.Account;
 import com.eventclick.faturappmicro.helpers.filters.filterCpfCnpj;
