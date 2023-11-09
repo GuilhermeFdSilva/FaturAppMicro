@@ -29,7 +29,7 @@ public class AccountDAO implements IDAO<Account>{
         contentValues.put("client_id", account.getClientId());
         contentValues.put("description", account.getDescription());
         contentValues.put("value", account.getValue());
-        contentValues.put("paid_at", account.getPaidAt().getTime());
+        contentValues.put("paid_at", account.getPaidAt() == null ? 0 : account.getPaidAt().getTime());
         contentValues.put("expiration", account.getExpiration().getTime());
         contentValues.put("paid", account.isPaid());
 

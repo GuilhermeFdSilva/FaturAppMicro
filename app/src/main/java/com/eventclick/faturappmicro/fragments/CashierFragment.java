@@ -12,17 +12,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.eventclick.faturappmicro.MainActivity;
 import com.eventclick.faturappmicro.R;
-import com.eventclick.faturappmicro.helpers.preferences.UserPreferences;
 import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.AccountDAO;
 import com.eventclick.faturappmicro.helpers.dbHelpers.models.Account;
 import com.eventclick.faturappmicro.helpers.filters.filterCpfCnpj;
 import com.eventclick.faturappmicro.helpers.observers.ObserveFragment;
+import com.eventclick.faturappmicro.helpers.preferences.UserPreferences;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -50,9 +51,6 @@ public class CashierFragment extends Fragment implements ObserveFragment {
         MainActivity.registerObserver(this);
 
         setViews(view);
-
-        textCompanyName.setText(preferences.getPreference(preferences.KEY_NAME));
-        textCompanyCnpj.setText(preferences.getPreference(preferences.KEY_CNPJ));
 
         imageEditName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,9 +106,17 @@ public class CashierFragment extends Fragment implements ObserveFragment {
         textEntranceValue = view.findViewById(R.id.textEntranceValue);
         textExitValue = view.findViewById(R.id.textExitValue);
 
+        textCompanyName.setText(preferences.getPreference(preferences.KEY_NAME).isEmpty() ?
+                getText(R.string.empty_company_name) :
+                preferences.getPreference(preferences.KEY_NAME));
+        textCompanyCnpj.setText(preferences.getPreference(preferences.KEY_CNPJ).isEmpty() ?
+                getText(R.string.empty_company_cpf_cnpj) :
+                preferences.getPreference(preferences.KEY_CNPJ));
+
         getValues();
 
         inputCnpj.addTextChangedListener(new filterCpfCnpj(inputCnpj));
+
     }
 
     private void configureViewsNameVisibility() {
@@ -164,26 +170,37 @@ public class CashierFragment extends Fragment implements ObserveFragment {
     private void setCompanyName() {
         String newCompanyName = inputName.getText().toString();
 
-        preferences.save(preferences.KEY_NAME,
-                newCompanyName.isEmpty() ? getString(R.string.empty_company_name) : newCompanyName);
+        preferences.save(preferences.KEY_NAME, newCompanyName);
 
-        textCompanyName.setText(preferences.getPreference(preferences.KEY_NAME));
+        textCompanyName.setText(preferences.getPreference(preferences.KEY_NAME).isEmpty() ?
+                getText(R.string.empty_company_name) :
+                preferences.getPreference(preferences.KEY_NAME));
+
         configureViewsNameVisibility();
     }
 
     private void setCompanyCnpj() {
         String newCompanyCnpj = inputCnpj.getText().toString();
 
-        preferences.save(preferences.KEY_CNPJ,
-                newCompanyCnpj.isEmpty() ? getString(R.string.empty_company_cpf_cnpj) : newCompanyCnpj);
-        textCompanyCnpj.setText(preferences.getPreference(preferences.KEY_CNPJ));
+        preferences.save(preferences.KEY_CNPJ, newCompanyCnpj);
+
+        textCompanyCnpj.setText(preferences.getPreference(preferences.KEY_CNPJ).isEmpty() ?
+                getText(R.string.empty_company_cpf_cnpj) :
+                preferences.getPreference(preferences.KEY_CNPJ));
         configureViewsCnpjVisibility();
     }
 
     private void copyCompanyCnpj(Context context) {
-        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData data = ClipData.newPlainText("Cnpj", preferences.getPreference(preferences.KEY_CNPJ));
-        clipboard.setPrimaryClip(data);
+        if (!preferences.getPreference(preferences.KEY_CNPJ).isEmpty() &&
+                (preferences.getPreference(preferences.KEY_CNPJ) != getString(R.string.empty_company_cpf_cnpj))) {
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData data = ClipData
+                    .newPlainText("Cnpj", preferences.getPreference(preferences.KEY_CNPJ));
+            clipboard.setPrimaryClip(data);
+            Toast.makeText(getContext(), "Copiado", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Nada para copiar ¯\\_(ツ)_/¯", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getValues() {
@@ -201,15 +218,26 @@ public class CashierFragment extends Fragment implements ObserveFragment {
         }
 
         int currentMonth = LocalDate.now().getMonthValue();
-        double positiveValues = accounts.stream().mapToDouble(account ->
-                (account.getPaidAt().getMonth() + 1 == currentMonth && account.getValue() > 0 && account.isPaid()) ?
-                        account.getValue() : 0).sum();
+        int currentYear = LocalDate.now().getYear();
+        double positiveValues = accounts.stream()
+                .filter(account ->
+                        account.getPaidAt().getMonth() + 1 == currentMonth &&
+                                account.getPaidAt().getYear() + 1 == currentYear &&
+                                account.isPaid() &&
+                                account.getValue() > 0)
+                .mapToDouble(Account::getValue)
+                .sum();
 
         textEntranceValue.setText(String.format("R$ %.2f", positiveValues));
 
-        double negativeValues = accounts.stream().mapToDouble(account ->
-                (account.getPaidAt().getMonth() + 1 == currentMonth && account.getValue() <= 0 && account.isPaid()) ?
-                        account.getValue() : 0).sum();
+        double negativeValues = accounts.stream()
+                .filter(account ->
+                        account.getPaidAt().getMonth() + 1 == currentMonth &&
+                                account.getPaidAt().getYear() + 1 == currentYear &&
+                                account.isPaid() &&
+                                account.getValue() < 0)
+                .mapToDouble(Account::getValue)
+                .sum();
 
         textExitValue.setText(String.format("R$ %.2f", negativeValues));
     }

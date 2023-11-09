@@ -173,9 +173,9 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
 
         Account account;
 
-        if (paid && viewExpiration.getText().toString().isEmpty()){
-            Date paidAt = expiration;
-            account = new Account(clientId, description, value, paidAt, expiration, paid);
+        if (paid){
+            java.sql.Date paidAt = expiration;
+            account = new Account(clientId, description, value, paidAt, expiration, true);
         } else {
             account = new Account(clientId, description, value, expiration, paid);
         }

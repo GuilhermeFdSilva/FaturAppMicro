@@ -24,6 +24,7 @@ import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.AccountDAO;
 import com.eventclick.faturappmicro.helpers.dbHelpers.models.Account;
 import com.eventclick.faturappmicro.helpers.dbHelpers.models.Client;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,6 +86,7 @@ public class AdapterAccounts extends RecyclerView.Adapter<AdapterAccounts.MyView
             @Override
             public void onClick(View view) {
                 account.setPaid(!account.isPaid());
+                account.setPaidAt(new Date(new java.util.Date().getTime()));
                 if (new AccountDAO(context).update(account)) {
                     fragment.getRegisters();
                     MainActivity.emitUpdate();

@@ -25,7 +25,7 @@ public class Account {
         this.clientId = clientId;
         this.description = description;
         this.value = value;
-        this.paidAt = new Date(new java.util.Date().getTime());
+        this.paidAt = null;
         this.expiration = expiration;
         this.paid = paid;
     }
