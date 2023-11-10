@@ -77,6 +77,7 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
         accounts = accountDAO.list();
         clients = clientDAO.list();
         clients.add(0, new Client(-1L, "- Selecione um item -"));
+
         adapter = new AdapterAccounts(getContext(), this, accounts, clients);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -134,7 +135,7 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
                         Account account = bind(view);
 
                         if (account == null) {
-                            Toast.makeText(getContext(), "O campo \"DESCRIÇÃO\" e \"VALOR\" são obrigatorios", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Os campos \"DESCRIÇÃO\" e \"VALOR\" são obrigatorios", Toast.LENGTH_LONG).show();
                         } else {
                             if (accountDAO.save(account)){
                                 Toast.makeText(getContext(), "Conta cadastrada", Toast.LENGTH_LONG).show();
@@ -172,12 +173,14 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
         Long clientId = viewClient.getSelectedItemId() == -1L ? null : viewClient.getSelectedItemId();
         java.sql.Date expiration = new Date(new java.util.Date().getTime());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            java.util.Date date = dateFormat.parse(viewExpiration.getText().toString());
-            expiration = new java.sql.Date(date.getTime());
-        } catch (Exception e) {
-            Log.i("DATA FORMAT", "error at converting date");
+        if (!viewExpiration.getText().toString().isEmpty()){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                java.util.Date date = dateFormat.parse(viewExpiration.getText().toString());
+                expiration = new java.sql.Date(date.getTime());
+            } catch (Exception e) {
+                Log.i("DATA FORMAT", "error at converting date");
+            }
         }
 
         Account account;

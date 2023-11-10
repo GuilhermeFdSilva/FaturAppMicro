@@ -26,6 +26,8 @@ import com.eventclick.faturappmicro.helpers.observers.ObserveFragment;
 import com.eventclick.faturappmicro.helpers.preferences.UserPreferences;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
 
 public class CashierFragment extends Fragment implements ObserveFragment {
@@ -219,10 +221,11 @@ public class CashierFragment extends Fragment implements ObserveFragment {
 
         int currentMonth = LocalDate.now().getMonthValue();
         int currentYear = LocalDate.now().getYear();
+
         double positiveValues = accounts.stream()
                 .filter(account ->
                         account.getPaidAt().getMonth() + 1 == currentMonth &&
-                                account.getPaidAt().getYear() + 1 == currentYear &&
+                                account.getPaidAt().getYear() + 1900 == currentYear &&
                                 account.isPaid() &&
                                 account.getValue() > 0)
                 .mapToDouble(Account::getValue)
@@ -233,7 +236,7 @@ public class CashierFragment extends Fragment implements ObserveFragment {
         double negativeValues = accounts.stream()
                 .filter(account ->
                         account.getPaidAt().getMonth() + 1 == currentMonth &&
-                                account.getPaidAt().getYear() + 1 == currentYear &&
+                                account.getPaidAt().getYear() + 1900 == currentYear &&
                                 account.isPaid() &&
                                 account.getValue() < 0)
                 .mapToDouble(Account::getValue)

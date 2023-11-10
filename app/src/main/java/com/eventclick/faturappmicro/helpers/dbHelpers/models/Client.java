@@ -17,6 +17,14 @@ public class Client {
         this.pix = pix;
     }
 
+    public Client(String name, String cpf_cnpj, String contact, String address, String pix) {
+        this.name = name;
+        this.cpf_cnpj = cpf_cnpj;
+        this.contact = contact;
+        this.address = address;
+        this.pix = pix;
+    }
+
     public Client(Long id, String name) {
         this.id = id;
         this.name = name;
