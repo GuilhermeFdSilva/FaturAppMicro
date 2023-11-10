@@ -2,15 +2,29 @@ package com.eventclick.faturappmicro.helpers.dbHelpers.models;
 
 import java.sql.Date;
 
+/**
+ * Modelo de dados para representação de uma conta
+ */
 public class Account {
     private Long id;
-    private Long clientId;
-    private String description;
-    private double value;
+    private final Long clientId;
+    private final String description;
+    private final double value;
     private Date paidAt;
-    private Date expiration;
+    private final Date expiration;
     private boolean paid;
 
+    /**
+     * Construtor da classe com todos os atributos
+     *
+     * @param id Identificador da conta
+     * @param clientId Identificador do cliente a quem a conta pertence
+     * @param description Descrição da conta
+     * @param value Valor da conta
+     * @param paidAt Data do pagamento da conta
+     * @param expiration Data de vencimento da conta
+     * @param paid Indica se a conta foi paga
+     */
     public Account(Long id, Long clientId, String description, double value, Date paidAt, Date expiration, boolean paid) {
         this.id = id;
         this.clientId = clientId;
@@ -21,20 +35,39 @@ public class Account {
         this.paid = paid;
     }
 
-    public Account(Long clientId, String description, double value, Date expiration, boolean paid) {
-        this.clientId = clientId;
-        this.description = description;
-        this.value = value;
-        this.paidAt = null;
-        this.expiration = expiration;
-        this.paid = paid;
-    }
-
+    /**
+     * Construtor da classe sem identificador
+     *
+     * @param clientId Identificador do cliente a quem a conta pertence
+     * @param description Descrição da conta
+     * @param value Valor da conta
+     * @param paidAt Data do pagamento da conta
+     * @param expiration Data de vencimento da conta
+     * @param paid Indica se a conta foi paga
+     */
     public Account(Long clientId, String description, double value, Date paidAt, Date expiration, boolean paid) {
         this.clientId = clientId;
         this.description = description;
         this.value = value;
         this.paidAt = paidAt;
+        this.expiration = expiration;
+        this.paid = paid;
+    }
+
+    /**
+     * Construtor da classe sem o identificador e data do pagamento
+     *
+     * @param clientId Identificador do cliente a quem a conta pertence
+     * @param description Descrição da conta
+     * @param value Valor da conta
+     * @param expiration Data de vencimento da conta
+     * @param paid Indica se a conta foi paga
+     */
+    public Account(Long clientId, String description, double value, Date expiration, boolean paid) {
+        this.clientId = clientId;
+        this.description = description;
+        this.value = value;
+        this.paidAt = null;
         this.expiration = expiration;
         this.paid = paid;
     }
@@ -51,24 +84,12 @@ public class Account {
         return clientId;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public double getValue() {
         return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
     }
 
     public Date getPaidAt() {
@@ -81,10 +102,6 @@ public class Account {
 
     public Date getExpiration() {
         return expiration;
-    }
-
-    public void setExpiration(Date expiration) {
-        this.expiration = expiration;
     }
 
     public boolean isPaid() {
