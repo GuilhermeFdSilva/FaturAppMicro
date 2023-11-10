@@ -18,12 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    // Lista de observadores utilizada para monitorar mudanças no banco de dados
+    /**
+     * Lista de observadores utilizada para monitorar mudanças no banco de dados
+     * Estática para compartilhamento entre as instâncias dessa classe
+     */
     private static final List<ObserveFragment> OBSERVE_FRAGMENTS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Infla o layout usando o databinding
         com.eventclick.faturappmicro.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
