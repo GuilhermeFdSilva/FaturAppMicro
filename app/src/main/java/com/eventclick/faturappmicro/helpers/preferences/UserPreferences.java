@@ -3,6 +3,9 @@ package com.eventclick.faturappmicro.helpers.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * Classe utilizada para acessar e gerenciar as preferências do usuário
+ */
 public class UserPreferences {
     private final SharedPreferences PREFERENCES;
     private final SharedPreferences.Editor EDITOR;
