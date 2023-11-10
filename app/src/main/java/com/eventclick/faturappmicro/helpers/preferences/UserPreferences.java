@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class UserPreferences {
-    private final SharedPreferences preferences;
-    private final SharedPreferences.Editor editor;
+    private final SharedPreferences PREFERENCES;
+    private final SharedPreferences.Editor EDITOR;
     public final static String KEY_NAME = "name";
     public final static String KEY_CNPJ = "cnpj";
 
@@ -15,8 +15,8 @@ public class UserPreferences {
      * @param context Utilizado para acessar as preferências
      */
     public UserPreferences (Context context) {
-        this.preferences =context.getSharedPreferences("company.preferences", 0);
-        this.editor = preferences.edit();
+        this.PREFERENCES =context.getSharedPreferences("company.preferences", 0);
+        this.EDITOR = PREFERENCES.edit();
     }
 
     /**
@@ -26,8 +26,8 @@ public class UserPreferences {
      * @param content Conteúdo a ser inserido como preferência
      */
     public void save (String key, String content) {
-        editor.putString(key, content);
-        editor.apply();
+        EDITOR.putString(key, content);
+        EDITOR.apply();
     }
 
     /**
@@ -37,6 +37,6 @@ public class UserPreferences {
      * @return O valor da preferência, ou uma String vazia se a preferência não existir
      */
     public String getPreference (String key) {
-        return preferences.getString(key, "");
+        return PREFERENCES.getString(key, "");
     }
 }
