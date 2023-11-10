@@ -116,7 +116,7 @@ public class ClientsFragment extends Fragment {
                 .setPositiveButton(positiveButton, (dialogInterface, i) -> {
                     Client client = bind(view);
 
-                    // Caso o cliente nao tenha preenchido um campo obrigatorio, exibe mensagem e nao realiza o cadastro
+                    // Caso o usuário não tenha preenchido um campo obrigatorio, exibe mensagem e não realiza o cadastro
                     if (client == null) {
                         Toast.makeText(getContext(), "O campo \"NOME\" é obrigatorio", Toast.LENGTH_LONG).show();
                     } else {
