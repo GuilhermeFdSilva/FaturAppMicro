@@ -1,15 +1,8 @@
 package com.eventclick.faturappmicro;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eventclick.faturappmicro.databinding.ActivityMainBinding;
@@ -25,24 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding binding;
-
-    private SmartTabLayout smartTabLayout;
-    private ViewPager viewPager;
-
+    // Lista de observadores utilizada para monitorar mudanças no banco de dados
     private static final List<ObserveFragment> OBSERVE_FRAGMENTS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.eventclick.faturappmicro.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        smartTabLayout = findViewById(R.id.viewPagerTab);
-        viewPager = findViewById(R.id.viewPager);
+        // Binding de views
+        SmartTabLayout smartTabLayout = findViewById(R.id.viewPagerTab);
+        ViewPager viewPager = findViewById(R.id.viewPager);
 
+        // Configuração do adapter para o viewPager
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add("Clientes", ClientsFragment.class)
@@ -51,15 +40,25 @@ public class MainActivity extends AppCompatActivity {
                 .create()
         );
 
+        // Set do adapter e do viewPager
         viewPager.setAdapter(adapter);
         smartTabLayout.setViewPager(viewPager);
+        // Define a segunda aba como inicial
         viewPager.setCurrentItem(1);
     }
 
+    /**
+     * Registra um observador
+     *
+     * @param observeFragment Observador a ser registrado
+     */
     public static void registerObserver(ObserveFragment observeFragment) {
         OBSERVE_FRAGMENTS.add(observeFragment);
     }
 
+    /**
+     * Notifica os observadores para atualizarem seus dados
+     */
     public static void emitUpdate() {
         for (ObserveFragment observer :OBSERVE_FRAGMENTS) {
             observer.update();
