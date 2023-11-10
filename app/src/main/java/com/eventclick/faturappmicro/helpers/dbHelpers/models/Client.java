@@ -1,7 +1,7 @@
 package com.eventclick.faturappmicro.helpers.dbHelpers.models;
 
 /**
- * Modelo de dados para representação do cliente
+ * Modelo de dados para representação de um cliente
  */
 public class Client {
     private Long id;
