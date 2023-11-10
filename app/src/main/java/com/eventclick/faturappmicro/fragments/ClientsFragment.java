@@ -68,7 +68,7 @@ public class ClientsFragment extends Fragment {
         List<Client> clients = clientDAO.list();
 
         // Configura o adapter com a lista de clientes
-        AdapterClients adapter = new AdapterClients(getContext(), this, clients);
+        AdapterClients adapter = new AdapterClients(this, clients);
 
         // Define a orientação do recycler
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

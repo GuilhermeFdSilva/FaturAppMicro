@@ -1,7 +1,5 @@
 package com.eventclick.faturappmicro.fragments.adapters;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -15,30 +13,42 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eventclick.faturappmicro.MainActivity;
 import com.eventclick.faturappmicro.R;
 import com.eventclick.faturappmicro.fragments.ClientsFragment;
-import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.AccountDAO;
 import com.eventclick.faturappmicro.helpers.dbHelpers.DAO.ClientDAO;
 import com.eventclick.faturappmicro.helpers.dbHelpers.models.Client;
 
 import java.util.List;
 
+/**
+ * Adaptador personalizado para preencher o RecyclerView com dados dos clientes
+ */
 public class AdapterClients extends RecyclerView.Adapter<AdapterClients.MyViewHolder> {
-    private Context context;
-    private ClientsFragment fragment;
+    private final ClientsFragment fragment;
 
-    private List<Client> clients;
+    private final List<Client> clients;
 
-    public AdapterClients(Context context, ClientsFragment fragment, List<Client> clients) {
-        this.context = context;
+    /**
+     * Construtor da classe
+     *
+     * @param fragment Fragmento associado ao adaptador
+     * @param clients  Lista de clientes
+     */
+    public AdapterClients(ClientsFragment fragment, List<Client> clients) {
         this.fragment = fragment;
         this.clients = clients;
     }
 
+    /**
+     * Cria novas instâncias de MyViewHolder associando ao layout
+     *
+     * @param parent   ViewGroup pai no qual a nova View será anexada
+     * @param viewType Tipo de visualização do item
+     * @return Instância de MyViewHolder
+     */
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,59 +58,80 @@ public class AdapterClients extends RecyclerView.Adapter<AdapterClients.MyViewHo
         return new MyViewHolder(itemView);
     }
 
+    /**
+     * Vincula os dados do cliente à um item no RecyclerView
+     *
+     * @param holder   Instância de MyViewHolder
+     * @param position Posição do item
+     */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Client client = clients.get(position);
 
+        // Configura o nome do cliente
         holder.textClientName.setText(client.getName());
 
+        // Configura as informações do cliente caso nao cadastrado exibe "Não cadastrado"
         String clientInfo = client.getCpf_cnpj().isEmpty() ? "Não cadastrado" : client.getCpf_cnpj();
         holder.textClientInfo.setText(clientInfo);
 
-        holder.imageDeleteClient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        // Configura OnClickListener exclusão do cliente
+        holder.imageDeleteClient.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
-                int greenColor = ContextCompat.getColor(view.getContext(), R.color.primaryDark);
-                int redColor = ContextCompat.getColor(view.getContext(), R.color.red);
+            // Obtendo as cores do R.color
+            int greenColor = ContextCompat.getColor(view.getContext(), R.color.primaryDark);
+            int redColor = ContextCompat.getColor(view.getContext(), R.color.red);
 
-                SpannableString positiveButton = new SpannableString("Deletar");
-                positiveButton.setSpan(new ForegroundColorSpan(greenColor), 0, positiveButton.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            // Configura uma String com cor definida vermelha
+            SpannableString positiveButton = new SpannableString("Deletar");
+            positiveButton.setSpan(new ForegroundColorSpan(greenColor), 0, positiveButton.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                SpannableString negativeButton = new SpannableString("Cancelar");
-                negativeButton.setSpan(new ForegroundColorSpan(redColor), 0, negativeButton.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            // Configura uma String com cor definida vermelha
+            SpannableString negativeButton = new SpannableString("Cancelar");
+            negativeButton.setSpan(new ForegroundColorSpan(redColor), 0, negativeButton.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                builder.setTitle("Deletar")
-                        .setMessage("Deletar: " + client.getName())
-                        .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if (new ClientDAO(view.getContext()).delete(client)) {
-                                    fragment.getRegisters();
-                                    MainActivity.emitUpdate();
-                                } else {
-                                    Toast.makeText(view.getContext(), "Erro ao deletar cliente", Toast.LENGTH_LONG);
-                                }
-                            }
-                        })
-                        .setNegativeButton(negativeButton, null)
-                        .create()
-                        .show();
-            }
+            // Configuração do AlertDialog
+            builder.setTitle("Deletar")
+                    .setMessage("Deletar: " + client.getName())
+                    .setPositiveButton(positiveButton, (dialogInterface, i) -> {
+                        if (new ClientDAO(view.getContext()).delete(client)) {
+                            fragment.getRegisters();
+                            MainActivity.emitUpdate();
+                        } else {
+                            Toast.makeText(view.getContext(), "Erro ao deletar cliente", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(negativeButton, null)
+                    .create()
+                    .show();
         });
     }
 
+    /**
+     * Obtém o número de itens da lista
+     *
+     * @return Número de itens da lista
+     */
     @Override
     public int getItemCount() {
         return clients.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Classe interna de uma View de item
+     */
+    static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textClientName, textClientInfo;
-        private ImageView imageDeleteClient;
+        private final TextView textClientName;
+        private final TextView textClientInfo;
+        private final ImageView imageDeleteClient;
 
+        /**
+         * Construtorda classe interna
+         *
+         * @param itemView View de um item
+         */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
