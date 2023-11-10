@@ -32,7 +32,7 @@ import java.util.List;
 public class ClientsFragment extends Fragment {
     private ClientDAO clientDAO;
 
-    // RecyclesView para exibir os clientes
+    // RecyclerView para exibir os clientes
     private RecyclerView recyclerView;
     // TextView para ser mostrado quando a lista estiver vazia
     private TextView textEmptyClients;
@@ -59,7 +59,7 @@ public class ClientsFragment extends Fragment {
     }
 
     /**
-     * Método responsavel por obter a lista de clientes atraves da DAO;
+     * Método responsável por obter a lista de clientes através da DAO;
      * configurar o adapter da lista de clientes;
      * e gerenciar a visibilidade da mensagem de lista vazia
      */
@@ -86,8 +86,8 @@ public class ClientsFragment extends Fragment {
     }
 
     /**
-     * Método responsavel por criar a AlertDialog de cadastro de clientes, inflando a view de cadastro;
-     * Também configura os botões de ação da dialog para salvar um novo cliente
+     * Método responsável por criar a AlertDialog de cadastro de clientes, inflando a view de cadastro;
+     * também configura os botões de ação da dialog para salvar um novo cliente
      */
     private void openAddClient() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -136,7 +136,7 @@ public class ClientsFragment extends Fragment {
     }
 
     /**
-     * Método responsavel por obter os dados dos EditText para criação de um objeto cliente
+     * Método responsável por obter os dados dos EditText para criação de um objeto cliente
      *
      * @param view View da Dialog de cadastro de cliente
      * @return Objeto cliente caso os campos estejam corretos, caso contrario retorna NULL
