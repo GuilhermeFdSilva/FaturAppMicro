@@ -30,6 +30,7 @@
     <string name="register_account_paid">Pago:</string>
 
     <string name="optional">Opicional</string>
+    <string name="empty_recycler">Nada para ver aqui! ¯\\_(ツ)_/¯</string>
 
     // Mock Strings
     <string name="name">Guilherme França</string>

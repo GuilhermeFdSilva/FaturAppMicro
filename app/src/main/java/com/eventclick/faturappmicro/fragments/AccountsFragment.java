@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -47,6 +48,7 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
     private AdapterAccounts adapter;
 
     private RecyclerView recyclerView;
+    private TextView textEmptyAccounts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +59,7 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
         clientDAO = new ClientDAO(getContext());
 
         recyclerView = view.findViewById(R.id.recyclerAccounts);
+        textEmptyAccounts = view.findViewById(R.id.textEmptyAccounts);
 
         getRegisters();
 
@@ -81,6 +84,12 @@ public class AccountsFragment extends Fragment implements ObserveFragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+        if (accounts.isEmpty()){
+            textEmptyAccounts.setVisibility(View.VISIBLE);
+        } else {
+            textEmptyAccounts.setVisibility(View.GONE);
+        }
     }
 
     private void openAddAccounts() {
