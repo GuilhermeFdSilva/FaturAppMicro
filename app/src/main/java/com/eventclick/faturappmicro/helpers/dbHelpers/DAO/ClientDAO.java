@@ -105,7 +105,7 @@ public class ClientDAO implements IDAO<Client>{
     }
 
     /**
-     * Encontr aum cliente com base no ID
+     * Encontra um cliente com base no ID
      *
      * @param idItem ID do cliete a ser localizado
      * @return Retorna um cliente com os dados encontrados
