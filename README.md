@@ -11,9 +11,3 @@ Projeto desenvolvido para treinamento em desenvolvimento mobile.
 ## Tecnologia aplicada
 - Java
 - SQLite
-
-## Instalação
-
-[Baixe o APK](/apk/FaturAppMicro.apk)
-
-Para fazer a instalação é necessário habilitar a instalação de aplicativo desconhecido.
