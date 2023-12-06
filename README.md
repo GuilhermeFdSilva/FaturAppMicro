@@ -3,7 +3,7 @@
 Projeto desenvolvido para treinamento em desenvolvimento mobile. 🤓<br>
 Esse projeto tem como objetivo facilitar o gerenciamento de contas de micro empresas. 👨🏽‍🏫
 
-### Tecnologia aplicada
+### Tecnologias aplicadas
 
 <a href="https://docs.oracle.com/en/java/">
   <img src="https://guilhermefdsilva.github.io/read-db-myPortfolio/sticks/stick-java.svg" alt="Java" height="28px">
