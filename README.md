@@ -6,11 +6,11 @@ Esse projeto tem como objetivo facilitar o gerenciamento de contas de micro empr
 ### Tecnologia aplicada
 
 <a href="https://docs.oracle.com/en/java/">
-  <img src="https://guilhermefdsilva.github.io/read-db-myPortfolio/sticks/stick-java.svg" alt="Java" height="28px" align="center">
+  <img src="https://guilhermefdsilva.github.io/read-db-myPortfolio/sticks/stick-java.svg" alt="Java" height="28px">
 </a>
 <br>
 <a href="https://dev.mysql.com/doc/">
-  <img src="https://guilhermefdsilva.github.io/read-db-myPortfolio/sticks/stick-mysql.svg" alt="MySQL" height="28px" align="center">
+  <img src="https://guilhermefdsilva.github.io/read-db-myPortfolio/sticks/stick-mysql.svg" alt="MySQL" height="28px">
 </a>
 
 ### Só acredito vendo 👀
